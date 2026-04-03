@@ -4,21 +4,21 @@ import { createClient } from '@/lib/supabase/server'
 export async function GET(request: Request) {
   const { searchParams, origin } = new URL(request.url)
   const code = searchParams.get('code')
-  // Le flow standard redirigera nativement vers dashboard si on utilise redirect dans le login,
-  // ou on l'intercepte via ce paramètre 'next'
+  // On récupère le paramètre "next" (défini dans le redirectTo du login) ou on force /dashboard par défaut
   const next = searchParams.get('next') ?? '/dashboard'
 
   if (code) {
     const supabase = await createClient()
+    
+    // Échange du code Google OAuth contre une session valide Supabase (cookies)
     const { error } = await supabase.auth.exchangeCodeForSession(code)
     
     if (!error) {
-      // Pour forcer l'URL absolu vers Vercel si besoin :
-      // return NextResponse.redirect(`https://noshowkill-ebon.vercel.app${next}`)
-      // En local origin suffira
+      // Redirection finale vers le dashboard, la session est maintenant active côté SSR
       return NextResponse.redirect(`${origin}${next}`)
     }
   }
 
-  return NextResponse.redirect(`${origin}/login?message=Could+not+authenticate+with+Google`)
+  // En cas d'erreur ou d'absence de code, on renvoie à la page de login avec l'erreur
+  return NextResponse.redirect(`${origin}/login?message=Échec+de+l'authentification+Google`)
 }
