@@ -41,7 +41,7 @@ export default function LandingPage() {
           
           <div className="flex flex-col items-center gap-4">
             <Link 
-              href="/login" 
+              href="/register" 
               className="inline-flex items-center justify-center gap-2 bg-white text-zinc-950 px-8 py-4 rounded-full text-lg font-bold hover:bg-zinc-200 transition-transform hover:scale-105"
             >
               Essayer gratuitement 30 jours
