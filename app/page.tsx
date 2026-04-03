@@ -15,7 +15,7 @@ export default function LandingPage() {
               Connexion
             </Link>
             <Link 
-              href="/register" 
+              href="/login" 
               className="text-sm bg-white text-zinc-950 px-4 py-2 rounded-full font-medium hover:bg-zinc-200 transition-colors"
             >
               Essayer gratuitement
@@ -41,7 +41,7 @@ export default function LandingPage() {
           
           <div className="flex flex-col items-center gap-4">
             <Link 
-              href="/register" 
+              href="/login" 
               className="inline-flex items-center justify-center gap-2 bg-white text-zinc-950 px-8 py-4 rounded-full text-lg font-bold hover:bg-zinc-200 transition-transform hover:scale-105"
             >
               Essayer gratuitement 30 jours
@@ -202,7 +202,7 @@ export default function LandingPage() {
             </ul>
 
             <Link 
-              href="/register" 
+              href="/login" 
               className="block w-full max-w-sm mx-auto bg-white text-zinc-950 py-4 rounded-xl text-lg font-bold hover:bg-zinc-200 transition-colors mb-6 shadow-xl shadow-white/5"
             >
               Commencer gratuitement →
