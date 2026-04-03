@@ -15,7 +15,7 @@ export default function LandingPage() {
               Connexion
             </Link>
             <Link 
-              href="/login" 
+              href="/register" 
               className="text-sm bg-white text-zinc-950 px-4 py-2 rounded-full font-medium hover:bg-zinc-200 transition-colors"
             >
               Essayer gratuitement
@@ -202,7 +202,7 @@ export default function LandingPage() {
             </ul>
 
             <Link 
-              href="/login" 
+              href="/register" 
               className="block w-full max-w-sm mx-auto bg-white text-zinc-950 py-4 rounded-xl text-lg font-bold hover:bg-zinc-200 transition-colors mb-6 shadow-xl shadow-white/5"
             >
               Commencer gratuitement →

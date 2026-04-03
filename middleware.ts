@@ -30,20 +30,24 @@ export async function middleware(request: NextRequest) {
   )
 
   const { data: { user } } = await supabase.auth.getUser()
+  const path = request.nextUrl.pathname
 
-  // Routes protégées : si l'utilisateur n'est pas connecté et essaie d'accéder au dashboard (ou à la racine si c'est le dashboard)
-  if (!user && (request.nextUrl.pathname.startsWith('/dashboard') || request.nextUrl.pathname === '/')) {
-    // Note: on laisse / si c'est la landing page publique, mais on a mis une condition stricte dans layout.tsx
-    // Pour l'instant, on redirige vers /login
-    const url = request.nextUrl.clone()
-    url.pathname = '/login'
-    return NextResponse.redirect(url)
+  // Règles explicites : NE PAS bloquer la racine (accueil) ni /login ni /register
+  // Si c'est une route libre d'accès, on renvoie directement ou on redirige intelligemment
+  if (path === '/' || path.startsWith('/login') || path.startsWith('/register') || path.startsWith('/auth')) {
+    // Si l'utilisateur est DÉJÀ connecté et essaie d'aller sur login/register, on le renvoie au dashboard
+    if (user && (path.startsWith('/login') || path.startsWith('/register'))) {
+      const url = request.nextUrl.clone()
+      url.pathname = '/dashboard'
+      return NextResponse.redirect(url)
+    }
+    return supabaseResponse
   }
 
-  // Si l'utilisateur est déjà connecté, empêcher l'accès à /login ou /register
-  if (user && (request.nextUrl.pathname.startsWith('/login') || request.nextUrl.pathname.startsWith('/register'))) {
+  // Protéger explicitement /dashboard (et sous-routes) si non-logué
+  if (!user && path.startsWith('/dashboard')) {
     const url = request.nextUrl.clone()
-    url.pathname = '/'
+    url.pathname = '/login'
     return NextResponse.redirect(url)
   }
 

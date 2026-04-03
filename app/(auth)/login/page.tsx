@@ -10,8 +10,8 @@ export default async function LoginPage(props: { searchParams: Promise<{ message
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        // Redirection vers le callback API qui échangera le code de session avant de nous envoyer vers le dashboard
-        redirectTo: 'https://noshowkill-ebon.vercel.app/api/auth/callback?next=/dashboard',
+        // Redirection explicite vers Vercel, qui repasse par la callback locale pour SSR session
+        redirectTo: 'https://noshowkill-ebon.vercel.app/auth/callback?next=/dashboard',
       },
     })
 
@@ -28,10 +28,10 @@ export default async function LoginPage(props: { searchParams: Promise<{ message
     <div className="min-h-screen bg-zinc-950 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <h2 className="mt-6 text-center text-3xl font-extrabold text-white">
-          NoShowKill
+          Accéder à NoShowKill
         </h2>
         <p className="mt-2 text-center text-sm text-zinc-400">
-          Connectez-vous pour accéder à votre tableau de bord.
+          Connexion simple et sécurisée 🔒
         </p>
       </div>
 
@@ -59,7 +59,6 @@ export default async function LoginPage(props: { searchParams: Promise<{ message
               {searchParams.message}
             </div>
           )}
-
         </div>
       </div>
     </div>
