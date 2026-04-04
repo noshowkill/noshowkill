@@ -10,8 +10,7 @@ export default async function LoginPage(props: { searchParams: Promise<{ message
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        // Redirection explicite vers Vercel, qui repasse par la callback locale pour SSR session
-        redirectTo: 'https://noshowkill-ebon.vercel.app/auth/callback?next=/dashboard',
+        redirectTo: 'https://noshowkill-ebon.vercel.app/auth/callback',
       },
     })
 
